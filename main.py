@@ -1,4 +1,16 @@
 import torch
+import torch
+from max.torch import CustomOpLibrary
+from pathlib import Path
+# Load the Mojo custom operations from the `operations` directory.
+mojo_kernels = Path(__file__).parent / "operations"
+op_library = CustomOpLibrary(mojo_kernels)
+
+# Register a custom operation that adds a constant value of 10 to a tensor.
+# The `value` parameter is a compile-time constant that we specify when
+# registering this operation
+custom_op = op_library.add_constant_custom[{"value": 10}]
+
 
 
 def alex_op_pure_pytorch(x: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
@@ -17,7 +29,11 @@ def alex_op_pure_pytorch(x: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
     return result
 
 def gabriel_version(x: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
-    
+    h, n, d = x.shape
+    h, c, d = w.shape
+    result = torch.empty((h, n, c, d), dtype=torch.int64, device=x.device)
+    custom_op(result, x, w)
+    return result
 
 
 

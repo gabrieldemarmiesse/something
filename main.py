@@ -45,6 +45,7 @@ if __name__ == "__main__":
     print(out1)
     with torch.no_grad():
         out2 = gabriel_version(x, w)
+    print(out2)
     
     assert torch.allclose(out1, out2)
 

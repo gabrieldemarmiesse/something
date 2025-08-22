@@ -1,0 +1,13 @@
+[project]
+name = "something"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "max>=25.5.0",
+    "nvidia-ml-py>=13.580.65",
+    "pillow>=11.3.0",
+    "torch>=2.8.0",
+    "torch-max-backend>=0.2.0",
+]

@@ -37,6 +37,7 @@ if __name__ == "__main__":
     n = 128
     d = 64
     c = 256
+    torch.manual_seed(42)
 
     x = torch.randn(h, n, d).cuda()
     w = torch.randn(h, c, d).cuda()
@@ -50,6 +51,6 @@ if __name__ == "__main__":
     #assert torch.allclose(out1, out2)
 
     # Get the ideal gpu memory usage (x + w + out1)
-    ideal_mem = (x.numel() + w.numel() + out2.numel()) * 4
+    ideal_mem = ((h * n * d) + (h * c * d) + (h * n)) * 4
     print(f"Ideal memory usage: {ideal_mem / 1024**2:.2f} MB")
     

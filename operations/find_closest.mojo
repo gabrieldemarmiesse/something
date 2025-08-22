@@ -90,6 +90,7 @@ fn find_closest_kernel[
         var min_dist = Float32(1e10)
         var min_idx = 0
         
+        # We could do fancy reductions with shared memory here
         for c in range(C):
             var dist = Float32(0)
             

@@ -9,15 +9,15 @@ from tensor_internal import (
 from utils.index import IndexList
 
 
-@compiler.register("add_constant_custom")
-struct AddConstantCustom[value: Int]:
+@compiler.register("find_closest")
+struct FindClosest:
     @staticmethod
     fn execute[
         target: StaticString,
     ](
         outp: OutputTensor,
-        x: InputTensor[dtype = outp.dtype, rank = 3],
-        w: InputTensor[dtype = outp.dtype, rank = 3],
+        x: InputTensor[dtype = outp.dtype, rank = 3], # fix dtype, should be float32
+        w: InputTensor[dtype = outp.dtype, rank = 3], # fix dtype should be float32
         ctx: DeviceContextPtr,
     ) raises:
         pass

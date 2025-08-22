@@ -9,7 +9,7 @@ op_library = CustomOpLibrary(mojo_kernels)
 # Register a custom operation that adds a constant value of 10 to a tensor.
 # The `value` parameter is a compile-time constant that we specify when
 # registering this operation
-custom_op = op_library.add_constant_custom[{"value": 10}]
+custom_op = op_library.add_constant_custom
 
 
 
@@ -31,10 +31,9 @@ def alex_op_pure_pytorch(x: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
 def gabriel_version(x: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
     h, n, d = x.shape
     h, c, d = w.shape
-    result = torch.empty((h, n, c, d), dtype=torch.int64, device=x.device)
-    custom_op(result, x, w)
+    result = torch.empty((h, n), dtype=torch.int64, device=x.device)
+    op_library.find_closest(result, x, w)
     return result
-
 
 
 if __name__ == "__main__":

@@ -30,7 +30,9 @@ struct FindClosest:
         
         if target == "cpu":
             find_closest_cpu(X, W, O)
+            print("Executed on CPU")
         else:
+            print("Executed on GPU")
             dev_ctx = ctx.get_device_context()
             find_closest_gpu(dev_ctx, X, W, O)
 

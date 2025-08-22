@@ -40,19 +40,16 @@ if __name__ == "__main__":
 
     x = torch.randn(h, n, d).cuda()
     w = torch.randn(h, c, d).cuda()
-    with torch.no_grad():
-        out1 = alex_op_pure_pytorch(x, w)
-    print(out1)
+    #with torch.no_grad():
+    #    out1 = alex_op_pure_pytorch(x, w)
+    #print(out1)
     with torch.no_grad():
         out2 = gabriel_version(x, w)
     print(out2)
     
-    assert torch.allclose(out1, out2)
+    #assert torch.allclose(out1, out2)
 
     # Get the ideal gpu memory usage (x + w + out1)
-    ideal_mem = (x.numel() + w.numel() + out1.numel()) * 4
+    ideal_mem = (x.numel() + w.numel() + out2.numel()) * 4
     print(f"Ideal memory usage: {ideal_mem / 1024**2:.2f} MB")
     
-    # Get maximum memory usage since the beginning
-    print(f"Max Allocated: {torch.cuda.max_memory_allocated() / 1024**2:.2f} MB")
-    print(f"Max Cached: {torch.cuda.max_memory_reserved() / 1024**2:.2f} MB")

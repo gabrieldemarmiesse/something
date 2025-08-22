@@ -6,10 +6,6 @@ from pathlib import Path
 mojo_kernels = Path(__file__).parent / "operations"
 op_library = CustomOpLibrary(mojo_kernels)
 
-# Register a custom operation that adds a constant value of 10 to a tensor.
-# The `value` parameter is a compile-time constant that we specify when
-# registering this operation
-custom_op = op_library.add_constant_custom
 
 
 
@@ -47,6 +43,10 @@ if __name__ == "__main__":
     with torch.no_grad():
         out1 = alex_op_pure_pytorch(x, w)
     print(out1)
+    with torch.no_grad():
+        out2 = gabriel_version(x, w)
+    
+    assert torch.allclose(out1, out2)
 
     # Get the ideal gpu memory usage (x + w + out1)
     ideal_mem = (x.numel() + w.numel() + out1.numel()) * 4
